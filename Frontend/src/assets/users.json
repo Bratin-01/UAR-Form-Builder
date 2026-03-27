@@ -1,0 +1,98 @@
+[
+    {
+        "id": 1,
+        "firstName": "Ananya",
+        "lastName": "Sharma",
+        "userId": "ASHAR",
+        "password": "user123",
+        "role": "User"
+    },
+    {
+        "id": 2,
+        "firstName": "Rohan",
+        "lastName": "Mehta",
+        "userId": "RMEHT",
+        "password": "user123",
+        "role": "User"
+    },
+    {
+        "id": 3,
+        "firstName": "Sneha",
+        "lastName": "Iyer",
+        "userId": "SIYER",
+        "password": "user123",
+        "role": "User"
+    },
+    {
+        "id": 4,
+        "firstName": "Arjun",
+        "lastName": "Patel",
+        "userId": "APATE",
+        "password": "user123",
+        "role": "User"
+    },
+    {
+        "id": 5,
+        "firstName": "Kavya",
+        "lastName": "Reddy",
+        "userId": "KREDD",
+        "password": "user123",
+        "role": "User"
+    },
+    {
+        "id": 6,
+        "firstName": "Vikram",
+        "lastName": "Nair",
+        "userId": "VNAIR",
+        "password": "user123",
+        "role": "User"
+    },
+    {
+        "id": 7,
+        "firstName": "Pooja",
+        "lastName": "Joshi",
+        "userId": "PJOSH",
+        "password": "user123",
+        "role": "User"
+    },
+    {
+        "id": 8,
+        "firstName": "Siddharth",
+        "lastName": "Banerjee",
+        "userId": "SBANE",
+        "password": "user123",
+        "role": "User"
+    },
+    {
+        "id": 9,
+        "firstName": "Dipanjan",
+        "lastName": "Das",
+        "userId": "DIDAS",
+        "password": "admin123",
+        "role": "Admin"
+    },
+    {
+        "id": 10,
+        "firstName": "Bratin",
+        "lastName": "Das",
+        "userId": "BRDAS",
+        "password": "admin123",
+        "role": "Admin"
+    },
+    {
+        "id": 9,
+        "firstName": "Subhranil",
+        "lastName": "Karmakar",
+        "userId": "SKARM",
+        "password": "admin123",
+        "role": "Admin"
+    },
+    {
+        "id": 10,
+        "firstName": "Ramit",
+        "lastName": "Ghosh",
+        "userId": "RGHOS",
+        "password": "admin123",
+        "role": "Admin"
+    }
+]
