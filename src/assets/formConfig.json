@@ -1,0 +1,66 @@
+{
+  "DEFAULT_DOC": {
+    "docTitle": "Global LIMS - User Access Form",
+    "docNo": "GLO-AUM-CS-GL-00059.003",
+    "entity": "010\nGlobal-LIMS (CORE)",
+    "entityNo": "010 GL",
+    "contentType": "Authorization Management",
+    "docHistory": [
+      { "version": "1", "changes": "New version", "date": "2024-02-26" },
+      { "version": "2", "changes": "Attachment removed", "date": "2025-08-01" },
+      { "version": "3", "changes": "Removed duplicates listed under operational roles\nAdded the roles based on VDO CR 128557\nUpdated the design how roles are presented in this document\nAdded table 2 for Access Requests in P environment", "date": "See Cover Page" }
+    ]
+  },
+  "DEFAULT_ENVS": [
+    {
+      "id": "MDP",
+      "label": "MDP",
+      "operativeRoles": [
+        "Analyst","Batch and Sample Creator","Certification Manager","Head of Lab",
+        "Head of QC Inspection Lot Releaser","Incident Approver","Incident Finisher",
+        "Incident Manager","Instrument Manager","Lab tech Apprentice","Monitoring Analyst",
+        "Plant Operator","QA Assistant Inspection Lot Releaser","QA Inspection Lot Releaser",
+        "QC Inspection Lot Releaser","QC Supervisor","Qualified Person","Reagent Manager",
+        "Remover","Sample Handling Officer","Sample Reviewer","Sampler","Special Peer-Approver",
+        "Stability Inventory Manager","Stability Manager","Stability Officer"
+      ],
+      "mdmRoles": [
+        "Global Master Data Manager*¹","Instrument Master Data Manager","Local Master Data Manager",
+        "Master Data Analyst*²","Monitoring Manager","Reagent Master Data Manager","Storage Handler"
+      ],
+      "viewerRoles": ["Extended Viewer","NON-QC"],
+      "uamRoles": ["User Access Manager"],
+      "departments": [
+        { "main": "ALH", "children": ["ALH-MA","ALH-MB","ALH-MMPP","ALH-QC"] },
+        { "main": "BRK", "children": ["BRK-DP","BRK-GRM","BRK-QA"] },
+        { "main": "GLOBAL", "children": [] }
+      ],
+      "footnote": "*¹ GMDM nomination required before access can be granted (as mentioned inside the Operational Manual)\n*² Master Data Analyst Jobtype can only be used in MDP-System"
+    },
+    {
+      "id": "P",
+      "label": "P",
+      "operativeRoles": [
+        "Analyst","Batch and Sample Creator","Certification Manager","Head of Lab",
+        "Head of QC Inspection Lot Releaser","Incident Approver","Incident Finisher",
+        "Incident Manager","Instrument Manager","Lab tech Apprentice","Monitoring Analyst",
+        "Plant Operator","QA Assistant Inspection Lot Releaser","QA Inspection Lot Releaser",
+        "QC Inspection Lot Releaser","QC Supervisor","Qualified Person","Reagent Manager",
+        "Remover","Sample Handling Officer","Sample Reviewer","Sampler","Special Peer-Approver",
+        "Stability Inventory Manager","Stability Manager","Stability Officer"
+      ],
+      "mdmRoles": [
+        "Global Master Data Manager*¹","Instrument Master Data Manager","Local Master Data Manager",
+        "Monitoring Manager","Reagent Master Data Manager","Storage Handler"
+      ],
+      "viewerRoles": ["Extended Viewer","NON-QC"],
+      "uamRoles": ["User Access Manager"],
+      "departments": [
+        { "main": "ALH", "children": ["ALH-MA","ALH-MB","ALH-MMPP","ALH-QC"] },
+        { "main": "BRK", "children": ["BRK-DP","BRK-GRM","BRK-QA"] },
+        { "main": "GLOBAL", "children": [] }
+      ],
+      "footnote": "*¹ GMDM nomination required before access can be granted (as mentioned inside the Operational Manual)\nNote: Master Data Analyst Jobtype can only be used in MDP-System"
+    }
+  ]
+}
