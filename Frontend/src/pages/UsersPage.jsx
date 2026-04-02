@@ -3,7 +3,7 @@ import USERS from "../assets/users.json";
 
 const ROLE_BADGE = {
   Admin: "bg-purple-100 text-purple-700 border border-purple-300",
-  User:  "bg-blue-100 text-blue-700 border border-blue-300",
+  User:  "bg-green-100 text-green-700 border border-green-300",
 };
 
 export default function UsersPage() {
@@ -33,7 +33,7 @@ export default function UsersPage() {
           <h1 className="text-2xl font-bold text-bayer-blue">Users</h1>
           <p className="text-sm text-gray-500 mt-0.5">{USERS.length} total users</p>
         </div>
-        <button className="bg-bayer-blue text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-[#004aad] transition-colors">
+        <button className="bg-blue-400 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-[#004aad] transition-colors">
           + Add User
         </button>
       </div>
@@ -47,21 +47,7 @@ export default function UsersPage() {
           onChange={e => setSearch(e.target.value)}
           className="border border-gray-300 rounded-lg px-3 py-2 text-sm w-72 focus:outline-none focus:ring-2 focus:ring-bayer-blue"
         />
-        <div className="flex rounded-lg border border-gray-300 overflow-hidden text-sm">
-          {["All", "Admin", "User"].map(r => (
-            <button
-              key={r}
-              onClick={() => setRoleFilter(r)}
-              className={`px-4 py-2 transition-colors ${
-                roleFilter === r
-                  ? "bg-bayer-blue text-white font-semibold"
-                  : "bg-white text-gray-600 hover:bg-gray-50"
-              }`}
-            >
-              {r}
-            </button>
-          ))}
-        </div>
+        
         {(search || roleFilter !== "All") && (
           <span className="self-center text-sm text-gray-400">
             {filtered.length} result{filtered.length !== 1 ? "s" : ""}
@@ -94,7 +80,7 @@ export default function UsersPage() {
                 <tr key={u.id} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
                   <td className="px-4 py-3 text-sm text-gray-400">{idx + 1}</td>
                   <td className="px-4 py-3 text-sm font-medium text-gray-800">{u.firstName}</td>
-                  <td className="px-4 py-3 text-sm text-gray-700">{u.lastName}</td>
+                  <td className="px-4 py-3 text-sm font-medium text-gray-700">{u.lastName}</td>
                   <td className="px-4 py-3">
                     <span className="font-mono text-sm bg-gray-100 px-2 py-0.5 rounded text-gray-700">
                       {u.userId}
@@ -107,7 +93,7 @@ export default function UsersPage() {
                   </td>
                   <td className="px-4 py-3">
                     <div className="flex gap-2">
-                      <button className="text-xs text-bayer-blue border border-bayer-blue px-2.5 py-1 rounded hover:bg-bayer-blue hover:text-white transition-colors">
+                      <button className="text-xs text-blue-400 border border-blue-400 px-2.5 py-1 rounded hover:bg-blue-400 hover:text-white transition-colors">
                         Edit
                       </button>
                       <button className="text-xs text-red-500 border border-red-300 px-2.5 py-1 rounded hover:bg-red-500 hover:text-white transition-colors">

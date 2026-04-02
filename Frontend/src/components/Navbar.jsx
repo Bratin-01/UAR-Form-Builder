@@ -1,36 +1,25 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import cognizantLogo from "../assets/cognizant.png";
 
-// Bayer logo as inline SVG
-function BayerLogo({ size = 42 }) {
+function CompanyLogo({ size = 42 }) {
   return (
-    <svg viewBox="0 0 200 200" width={size} height={size} xmlns="http://www.w3.org/2000/svg">
-      <circle cx="100" cy="100" r="97" fill="white" />
-      <circle cx="100" cy="100" r="97" fill="none" stroke="#7BC144" strokeWidth="18" />
-      <circle cx="100" cy="100" r="79" fill="none" stroke="#00BCFF" strokeWidth="10" />
-      <circle cx="100" cy="100" r="74" fill="#003087" />
-      <rect x="88" y="20" width="24" height="160" fill="white" />
-      <rect x="20" y="88" width="160" height="24" fill="white" />
-      {/* Vertical BAYER */}
-      {["B","A","Y","E","R"].map((l, i) => (
-        <text key={`v${i}`} x="100" y={58 + i * 22} textAnchor="middle"
-          fill="#003087" fontSize="19" fontWeight="bold" fontFamily="Arial, sans-serif">{l}</text>
-      ))}
-      {/* Horizontal BAYER */}
-      {[["B",38],["A",59],["Y",100],["E",141],["R",162]].map(([l, x]) => (
-        <text key={`h${l}`} x={x} y="106" textAnchor="middle"
-          fill="#003087" fontSize="19" fontWeight="bold" fontFamily="Arial, sans-serif">{l}</text>
-      ))}
-    </svg>
+    <img
+      src={cognizantLogo}
+      alt="Cognizant"
+      width={size}
+      height={size}
+      style={{ objectFit: "contain" }}
+    />
   );
 }
 
 const ALL_NAV = [
-  { label: "UAR Form",       path: "/uar-form",       roles: ["Admin", "User"] },
-  { label: "Users",          path: "/users",          roles: ["Admin"] },
-  { label: "Edit Form",      path: "/edit-form",      roles: ["Admin"] },
-  { label: "Form Records",   path: "/form-records",   roles: ["Admin", "User"] },
-  { label: "Edit Records",   path: "/edit-records",   roles: ["Admin"] },
+  { label: "UAR Form",     path: "/uar-form",     roles: ["Admin", "User"] },
+  { label: "Users",        path: "/users",        roles: ["Admin"] },
+  { label: "Edit Form",    path: "/edit-form",    roles: ["Admin"] },
+  { label: "Form Records", path: "/form-records", roles: ["Admin", "User"] },
+  { label: "Edit Records", path: "/edit-records", roles: ["Admin"] },
 ];
 
 export default function Navbar() {
@@ -56,7 +45,7 @@ export default function Navbar() {
       <div className="max-w-screen-xl mx-auto px-4 flex items-center justify-between h-16">
         {/* Brand */}
         <div className="flex items-center gap-3">
-          <BayerLogo size={40} />
+          <CompanyLogo size={40} />
           <div className="leading-tight">
             <p className="text-white font-bold text-sm tracking-wide">Global LIMS</p>
             <p className="text-bayer-cyan text-xs">User Access Request</p>
@@ -72,7 +61,7 @@ export default function Navbar() {
           ))}
         </div>
 
-        {/* User info + logout */}
+        {/* Logout */}
         <div className="flex items-center gap-3">
           <button
             onClick={handleLogout}
