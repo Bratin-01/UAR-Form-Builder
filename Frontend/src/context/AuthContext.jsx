@@ -1,30 +1,26 @@
 import { createContext, useContext, useState } from "react";
-import USERS from "../assets/users.json";
 
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(() => {
-    const saved = sessionStorage.getItem("uar_user");
-    return saved ? JSON.parse(saved) : null;
+    // Rehydrate from sessionStorage on page refresh
+    try {
+      const stored = sessionStorage.getItem("user");
+      return stored ? JSON.parse(stored) : null;
+    } catch {
+      return null;
+    }
   });
 
-  const login = (userId, password) => {
-    const found = USERS.find(
-      (u) => u.userId === userId && u.password === password
-    );
-    if (found) {
-      const { password: _, ...safe } = found;
-      setUser(safe);
-      sessionStorage.setItem("uar_user", JSON.stringify(safe));
-      return { success: true, user: safe };
-    }
-    return { success: false, error: "Invalid User ID or Password." };
+  const login = (userData) => {
+    sessionStorage.setItem("user", JSON.stringify(userData));
+    setUser(userData);
   };
 
   const logout = () => {
+    sessionStorage.removeItem("user");
     setUser(null);
-    sessionStorage.removeItem("uar_user");
   };
 
   return (
@@ -34,4 +30,6 @@ export function AuthProvider({ children }) {
   );
 }
 
-export const useAuth = () => useContext(AuthContext);
+export function useAuth() {
+  return useContext(AuthContext);
+}

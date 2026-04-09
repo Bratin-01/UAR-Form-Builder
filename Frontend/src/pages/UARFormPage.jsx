@@ -23,16 +23,28 @@ function FillEnvTable({ env, tableNum, state, setState }) {
 
   const toggleRole = (field, item) => {
     if (locked) return;
-    setState(p => ({ ...p, [field]: p[field].includes(item) ? p[field].filter(r => r !== item) : [...p[field], item] }));
+    setState(p => ({
+      ...p,
+      [field]: p[field].includes(item)
+        ? p[field].filter(r => r !== item)
+        : [...p[field], item],
+    }));
   };
-  const toggleDept = (key) => setState(p => ({ ...p, deptSel:{ ...p.deptSel, [key]:!p.deptSel[key] } }));
+  const toggleDept = (key) =>
+    setState(p => ({ ...p, deptSel: { ...p.deptSel, [key]: !p.deptSel[key] } }));
 
   const RoleCheck = ({ field, item, color }) => (
     <label
       className={`flex items-center gap-2 px-2 py-0.5 rounded cursor-pointer text-sm select-none ${locked ? "cursor-not-allowed opacity-50" : ""}`}
       style={{ background: state[field].includes(item) ? color : "transparent" }}
     >
-      <input type="checkbox" className="w-3.5 h-3.5 accent-blue-700" checked={state[field].includes(item)} onChange={() => toggleRole(field, item)} disabled={locked} />
+      <input
+        type="checkbox"
+        className="w-3.5 h-3.5 accent-blue-700"
+        checked={state[field].includes(item)}
+        onChange={() => toggleRole(field, item)}
+        disabled={locked}
+      />
       <span>{item}</span>
     </label>
   );
@@ -43,11 +55,16 @@ function FillEnvTable({ env, tableNum, state, setState }) {
         Table {tableNum}: Requested Role(s) and Department(s) for <u>{env.label}</u> System
       </div>
       <div className="p-4">
-        <p className="font-semibold text-sm mb-2">Reason of Access Request (Job Types):</p>
+        <p className="font-semibold text-sm mb-2">Reason of Access Request:</p>
         <div className="flex flex-wrap gap-x-5 gap-y-2 mb-4">
           {reasonOpts.map(o => (
             <label key={o} className="flex items-center gap-2 text-sm cursor-pointer">
-              <input type="radio" name={`${env.id}_reason`} checked={reason===o} onChange={() => setState(p => ({ ...p, reason:o }))} />
+              <input
+                type="radio"
+                name={`${env.id}_reason`}
+                checked={reason === o}
+                onChange={() => setState(p => ({ ...p, reason: o }))}
+              />
               {o}
             </label>
           ))}
@@ -70,7 +87,11 @@ function FillEnvTable({ env, tableNum, state, setState }) {
 
         <div className="bg-gray-100 border border-gray-200 rounded p-3">
           <label className="flex items-center gap-2 text-sm font-semibold cursor-pointer mb-3">
-            <input type="checkbox" checked={deptChange} onChange={e => setState(p => ({ ...p, deptChange:e.target.checked }))} />
+            <input
+              type="checkbox"
+              checked={deptChange}
+              onChange={e => setState(p => ({ ...p, deptChange: e.target.checked }))}
+            />
             Change for local Departments
             <span className="font-normal text-gray-500 text-xs">(consider global Department assignment only for GMDM Role)</span>
           </label>
@@ -106,39 +127,44 @@ function FillEnvTable({ env, tableNum, state, setState }) {
 export default function UARFormPage() {
   const navigate = useNavigate();
 
-  const [users, setUsers]           = useState([{ lastName:"", firstName:"", cwid:"", function:"" }]);
-  const [reason, setReason]         = useState("New");
-  const [changeDesc, setChangeDesc] = useState("");
+  const [envs]                                    = useState(DEFAULT_ENVS);
+  const [users, setUsers]                         = useState([{ lastName:"", firstName:"", cwid:"", function:"" }]);
+  const [reason, setReason]                       = useState("New");
+  const [changeDesc, setChangeDesc]               = useState("");
+  const [trainingNA, setTrainingNA]               = useState(false);
+  const [trainingNAReason, setTrainingNAReason]   = useState("");
+  const [trainingConfirmed, setTrainingConfirmed] = useState(false);
 
   const [envStates, setEnvStates] = useState(
     () => Object.fromEntries(DEFAULT_ENVS.map(e => [e.id, mkEnvState()]))
   );
   const setEnvState = (id, updater) =>
-    setEnvStates(p => ({ ...p, [id]: typeof updater === "function" ? updater(p[id]) : updater }));
-
-  const [trainingNA, setTrainingNA]               = useState(false);
-  const [trainingNAReason, setTrainingNAReason]   = useState("");
-  const [trainingConfirmed, setTrainingConfirmed] = useState(false);
+    setEnvStates(p => ({
+      ...p,
+      [id]: typeof updater === "function" ? updater(p[id]) : updater,
+    }));
 
   const addUser    = () => setUsers([...users, { lastName:"", firstName:"", cwid:"", function:"" }]);
   const removeUser = (i) => setUsers(users.filter((_, idx) => idx !== i));
   const updateUser = (i, f, v) => { const u = [...users]; u[i][f] = v; setUsers(u); };
 
-  const handlePreview = () => {
+  const goToPreview = () => {
     navigate("/uar-preview", {
-      state: { users, reason, changeDesc, envStates, trainingNA, trainingNAReason, trainingConfirmed }
+      state: { users, reason, changeDesc, envStates, trainingNA, trainingNAReason, trainingConfirmed },
     });
   };
 
-  const inpCls = "w-full border border-gray-300 rounded px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400";
+  const inpCls = "w-full border border-gray-300 rounded px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-bayer-blue";
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-6">
+
+      {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-xl font-bold text-bayer-blue">Global LIMS User Access Request Form</h1>
-        <button onClick={handlePreview}
+        <button onClick={goToPreview}
           className="bg-blue-400 text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-[#004aad] transition-colors">
-          Preview & Print →
+          Preview & Download →
         </button>
       </div>
 
@@ -160,20 +186,26 @@ export default function UARFormPage() {
                 <tr key={i}>
                   {["lastName","firstName","cwid","function"].map(f => (
                     <td key={f} className="border border-gray-200 p-1">
-                      <input value={u[f]} onChange={e => updateUser(i, f, e.target.value)} className={inpCls}
-                        placeholder={f === "cwid" ? "CWID" : f.charAt(0).toUpperCase()+f.slice(1)} />
+                      <input
+                        value={u[f]}
+                        onChange={e => updateUser(i, f, e.target.value)}
+                        className={inpCls}
+                        placeholder={f === "cwid" ? "CWID" : f.charAt(0).toUpperCase() + f.slice(1)}
+                      />
                     </td>
                   ))}
                   {users.length > 1 && (
                     <td className="border border-gray-200 p-1 text-center w-10">
-                      <button onClick={() => removeUser(i)} className="text-red-500 hover:text-red-700 font-bold text-lg leading-none">×</button>
+                      <button onClick={() => removeUser(i)}
+                        className="text-red-500 hover:text-red-700 font-bold text-lg leading-none">×</button>
                     </td>
                   )}
                 </tr>
               ))}
             </tbody>
           </table>
-          <button onClick={addUser} className="text-sm bg-blue-400 text-white px-3 py-1 rounded hover:bg-[#004aad] transition-colors">
+          <button onClick={addUser}
+            className="text-sm bg-blue-400 text-white px-3 py-1 rounded hover:bg-[#004aad] transition-colors">
             + Add User
           </button>
         </div>
@@ -185,7 +217,8 @@ export default function UARFormPage() {
         <div className="p-4 space-y-2">
           {["New","Deactivation","Change"].map(r => (
             <label key={r} className="flex items-start gap-2 text-sm cursor-pointer">
-              <input type="radio" name="accessReason" checked={reason===r} onChange={() => setReason(r)} className="mt-0.5" />
+              <input type="radio" name="accessReason" checked={reason === r}
+                onChange={() => setReason(r)} className="mt-0.5" />
               {r === "New" ? "New"
                 : r === "Deactivation" ? "Deactivation (disable user account(s), remove all job types and departments)"
                 : "Change (describe changes, include 'old' and 'new' value):"}
@@ -194,14 +227,14 @@ export default function UARFormPage() {
           {reason === "Change" && (
             <textarea value={changeDesc} onChange={e => setChangeDesc(e.target.value)}
               placeholder="Describe the change (old and new values)..."
-              className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 h-20 resize-none mt-1" />
+              className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-bayer-blue h-20 resize-none mt-1" />
           )}
         </div>
       </section>
 
       {/* Env Tables */}
-      {DEFAULT_ENVS.map((env, idx) => (
-        <FillEnvTable key={env.id} env={env} tableNum={idx+1}
+      {envs.map((env, idx) => (
+        <FillEnvTable key={env.id} env={env} tableNum={idx + 1}
           state={envStates[env.id] || mkEnvState()}
           setState={(updater) => setEnvState(env.id, updater)} />
       ))}
@@ -211,7 +244,8 @@ export default function UARFormPage() {
         <div className="bg-gray-300 px-3 py-2 font-bold text-sm">2. Training Documentation</div>
         <div className="p-4 space-y-3">
           <label className="flex items-start gap-2 text-sm cursor-pointer">
-            <input type="checkbox" checked={trainingNA} onChange={e => setTrainingNA(e.target.checked)} className="mt-0.5" />
+            <input type="checkbox" checked={trainingNA}
+              onChange={e => setTrainingNA(e.target.checked)} className="mt-0.5" />
             N/A (Reason to be entered):
           </label>
           {trainingNA && (
@@ -219,18 +253,21 @@ export default function UARFormPage() {
               placeholder="Enter reason..." className={inpCls} />
           )}
           <label className="flex items-center gap-2 text-sm cursor-pointer">
-            <input type="checkbox" checked={trainingConfirmed} onChange={e => setTrainingConfirmed(e.target.checked)} />
+            <input type="checkbox" checked={trainingConfirmed}
+              onChange={e => setTrainingConfirmed(e.target.checked)} />
             Training record exist and is confirmed (access to the system is to be granted).
           </label>
         </div>
       </section>
 
+      {/* Footer */}
       <div className="flex justify-end">
-        <button onClick={handlePreview}
+        <button onClick={goToPreview}
           className="bg-blue-400 text-white px-6 py-2.5 rounded-lg text-sm font-semibold hover:bg-[#004aad] transition-colors">
-          Preview & Print →
+          Preview & Download →
         </button>
       </div>
+
     </div>
   );
 }

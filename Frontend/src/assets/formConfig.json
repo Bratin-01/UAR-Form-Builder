@@ -1,10 +1,10 @@
 {
   "DEFAULT_DOC": {
     "docTitle": "Global LIMS - User Access Form",
-    "docNo": "GLO-AUM-CS-GL-00059.003",
-    "entity": "010\nGlobal-LIMS (CORE)",
-    "entityNo": "010 GL",
-    "contentType": "Authorization Management",
+    "docNo": "Test-Doc-1.0",
+    "entity": "CTS-UAR-Builder",
+    "entityNo": "1.0 CTS",
+    "contentType": "Testing Management",
     "docHistory": [
       { "version": "1", "changes": "New version", "date": "2024-02-26" },
       { "version": "2", "changes": "Attachment removed", "date": "2025-08-01" },

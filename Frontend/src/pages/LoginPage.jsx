@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import cognizantLogo from "../assets/cognizant.png";
 
+const API = import.meta.env.VITE_API_URL ?? "http://localhost:5000";
+
 function CompanyLogo({ size = 80 }) {
   return (
     <img
@@ -16,13 +18,13 @@ function CompanyLogo({ size = 80 }) {
 }
 
 export default function LoginPage() {
-  const { login } = useAuth();
-  const navigate = useNavigate();
+  const { login }  = useAuth();
+  const navigate   = useNavigate();
 
-  const [userId, setUserId]     = useState("");
+  const [userId,   setUserId]   = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError]       = useState("");
-  const [loading, setLoading]   = useState(false);
+  const [error,    setError]    = useState("");
+  const [loading,  setLoading]  = useState(false);
   const [showPass, setShowPass] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -33,13 +35,25 @@ export default function LoginPage() {
       return;
     }
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 400));
-    const result = login(userId.trim(), password);
-    setLoading(false);
-    if (result.success) {
-      navigate("/uar-form");
-    } else {
-      setError(result.error);
+    try {
+      const res  = await fetch(`${API}/api/auth/login`, {
+        method:  "POST",
+        headers: { "Content-Type": "application/json" },
+        body:    JSON.stringify({ user_id: userId.trim(), password }),
+      });
+      const json = await res.json();
+      if (!res.ok || !json.success) {
+        setError(json.error ?? "Login failed. Please try again.");
+      } else {
+        console.log(json.success);
+        login(json.data);
+        console.log("Navigating…")
+        navigate("/uar-form");
+      }
+    } catch {
+      setError("Could not reach the server. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
